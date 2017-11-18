@@ -770,6 +770,36 @@ eslintTester.run('no-unused-state', rule, {
         }`,
       errors: getErrorMessages(['bar']),
       parser: 'babel-eslint'
+    },
+    {
+      code: `class FunctionalSetStateShortFormTest extends React.Component {
+        onFooChange(newFoo) {
+          this.setState(() => ({
+            foo: newFoo
+          }))
+        }
+        render() {
+          return <SomeComponent />;
+        }
+      }`,
+      errors: getErrorMessages(['foo']),
+      parser: 'babel-eslint'
+    },
+    {
+      code: `class FunctionalSetStateTest extends React.Component {
+        onFooChange(newFoo) {
+          this.setState(() => {
+            return {
+              foo: newFoo
+            }
+          })
+        }
+        render() {
+          return <SomeComponent />;
+        }
+      }`,
+      errors: getErrorMessages(['foo']),
+      parser: 'babel-eslint'
     }
   ]
 });
